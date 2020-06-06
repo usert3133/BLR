@@ -1,0 +1,26 @@
+pipeline{
+    agent any
+    stages{
+        stage('Download code'){
+            steps{
+                script{
+                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/usert3133/BLR.git']]])
+                  sh """
+                  pwd
+                  """
+                }
+            }
+        }
+        stage('maven build'){
+            steps{
+                script{
+                    sh"""
+                    pwd
+                    cd login/
+                    mvn clean
+                    """
+                }
+            }
+        }
+    }
+}
